@@ -34,7 +34,7 @@
 extern char **env;
 
 /**
- * struct liststring
+ *struct liststring
  *@num:the num field
  *@str: a string to define
  *@next_index: it points to the next node
@@ -156,4 +156,76 @@ void *_reallocate(void *, unsigned int, unsigned int);
 /* memory.c */
 int free_block(void **);
 
+/* _interactive.c */
+int interactive_shell(infom_t *);
+int check_if_delimiter(char, char *);
+int check_alpha(int);
+int convert_to_integer(char *);
 
+/* error_handling.c */
+int convert_error_integer(char *);
+void print_error_message(infom_t *, char *);
+int print_directory(int, int);
+char *convert_integer_to_string(long int, int, int);
+void remove_comments_from_input(char *);
+
+/* shell_builtin.c */
+int quit_shell(infom_t *);
+int change_directory(infom_t *);
+int provide_help(infom_t *);
+
+/* shell_ext_builtin.c */
+int check_history(infom_t *);
+int check_alias(infom_t *);
+
+/*_input.c */
+ssize_t read_input(infom_t *);
+int read_line(infom_t *, char **, size_t *);
+void handle_sigint(int);
+
+/* info_handling.c */
+void clear_shell_info(infom_t *);
+void set_shell_info(infom_t *, char **);
+void free_shell_info(infom_t *, int);
+
+/* _environment.c */
+char *get_env_variable(infom_t *, const char *);
+int list_env_variables(infom_t *);
+int set_env_variable(infom_t *);
+int unset_env_variable(infom_t *);
+int add_env_variables(infom_t *);
+
+/* env_handling.c */
+char **get_env_variables(infom_t *);
+int unset_env(infom_t *, char *);
+int set_env(infom_t *, char *, char *);
+
+/* hist_handling.c */
+char *get_hist_file_path(infom_t *info);
+int write_hist_to_file(infom_t *info);
+int read_hist_from_file(infom_t *info);
+int create_hist_list(infom_t *info, char *buf, int linecount);
+int sort_and_renum_hist(infom_t *info);
+
+/* _linkedlist.c */
+list_t *add_list_node(list_t **, const char *, int);
+list_t *append_list_node(list_t **, const char *, int);
+size_t print_list_string(const list_t *);
+int delete_list_node(list_t **, unsigned int);
+void free_list_memory(list_t **);
+
+/* linkedlist_handling.c */
+size_t get_list_length(const list_t *);
+char **convert_list_to_strings(list_t *);
+size_t display_list(const list_t *);
+list_t *search_list_starts_with(list_t *, char *, char);
+ssize_t get_list_index(list_t *, list_t *);
+
+/* vars_handling.c */
+int check_chain_of_commands(infom_t *, char *, size_t *);
+void handle_chain_commands(infom_t *, char *, size_t *, size_t, size_t);
+int replace_alias_with_command(infom_t *);
+int replace_vars_in_input(infom_t *);
+int replace_string_vars(char **, char *);
+
+#endif
