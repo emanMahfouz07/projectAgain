@@ -105,7 +105,7 @@ typedef struct built_funcs
 {
 	char *typeF;
 	int (*funcs)(infom_t *);
-} built_funcs_table
+} built_funcs_table;
 
 /* shell Loops.c */
 int hsh(infom_t *, char **);
@@ -141,7 +141,7 @@ int _putchar(char);
 
 /* exit.c */
 char *_strcopy(char *, char *, int);
-char *_strcat(char *, char *, int);
+char *_strncat(char *, char *, int);
 char *_find_strchr(char *, char);
 
 /* updated_toem_tokenizer.c */
