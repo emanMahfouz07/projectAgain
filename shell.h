@@ -34,7 +34,7 @@
 extern char **env;
 
 /**
- *struct liststring
+ *struct liststring - single linked list
  *@num:the num field
  *@str: a string to define
  *@next_index: it points to the next node
@@ -56,7 +56,7 @@ typedef struct liststring
  *@lines_flag:if on count this line input
  *@argcm:the argument count
  *@errors:the error code count
- *@@file_name: the program filename
+ *@file_Name: the program filename
  *@linkedenv: linked list local copy of environ
  *@env: custom modified copy of environ from LL env
  *@hist: the history node
@@ -64,7 +64,7 @@ typedef struct liststring
  *@changed_env: on if environ was changed
  *@last_command: the return status of the last exec'd command
  *@cmd_buf_pointer: address of pointer to cmd_buf, on if chaining
- *@cmd_type: CMD_type ||, &&, ;
+ *@cmd_types: CMD_type ||, &&, ;
  *@read_dict: the fd to read line input
  *@hist_num_counts: the history lines count
  */
@@ -88,7 +88,7 @@ typedef struct pass
 	char cmd_buf_pointer;
 	int cmd_types;
 	int read_dict;
-	int hist_num_count;
+	int hist_num_counts;
 } infom_t;
 
 #define INFO_INIT \
@@ -105,7 +105,7 @@ typedef struct built_funcs
 {
 	char *typeF;
 	int (*funcs)(infom_t *);
-} built_funcs_table
+} built_funcs_table;
 
 /* shell Loops.c */
 int hsh(infom_t *, char **);
@@ -141,7 +141,7 @@ int _putchar(char);
 
 /* exit.c */
 char *_strcopy(char *, char *, int);
-char *_strcat(char *, char *, int);
+char *_strncat(char *, char *, int);
 char *_find_strchr(char *, char);
 
 /* updated_toem_tokenizer.c */
