@@ -57,7 +57,7 @@ int _putfdict(char m, int filedict)
 	if (m == BUF_FLUSH || index >= WRITE_BUF_SIZE)
 	{
 		write(filedict, buff, index);
-		i = 0;
+		index = 0;
 	}
 	if (m != BUF_FLUSH)
 		buff[index++] = m;

@@ -33,7 +33,7 @@ ssize_t in_buf(infom_t *info, char **buf, size_t *len)
 			}
 			info->linesCount = 1;
 			remove_comments_from_input(*buf);
-			create_hist_list(info, *buf, info->hist_num_count++);
+			create_hist_list(info, *buf, info->hist_num_counts++);
 			/* if (_find_strchr(*buf, ';')) is this a command chain? */
 			{
 				*len = r;
@@ -142,7 +142,7 @@ int read_line(infom_t *info, char **ptr, size_t *len)
 		return (p ? free(p), -1 : -1);
 
 	if (s)
-		_strcat(new_p, buf + i, k - i);
+		_strncat(new_p, buf + i, k - i);
 	else
 		_strcopy(new_p, buf + i, k - i + 1);
 

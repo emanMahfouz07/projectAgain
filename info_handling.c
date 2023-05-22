@@ -24,14 +24,14 @@ void set_shell_info(infom_t *info, char **av)
 	info->file_Name = av[0];
 	if (info->argm)
 	{
-		info->argvm = strtow(info->argm, " \t");
+		info->argvm = split_string(info->argm, " \t");
 		if (!info->argvm)
 		{
 
 			info->argvm = malloc(sizeof(char *) * 2);
 			if (info->argvm)
 			{
-				info->argvm[0] = _strdup(info->argm);
+				info->argvm[0] = _dublicate_string(info->argm);
 				info->argvm[1] = NULL;
 			}
 		}
@@ -66,7 +66,7 @@ void free_shell_info(infom_t *info, int all)
 			free_list_memory(&(info->neigb_node));
 		ffree(info->env);
 			info->env = NULL;
-		ffree((void **)info->cmd_buf_pointer);
+		free_block((void **)info->cmd_buf_pointer);
 		if (info->read_dict > 2)
 			close(info->read_dict);
 		_putchar(BUF_FLUSH);

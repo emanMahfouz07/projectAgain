@@ -1,5 +1,5 @@
-#ifndef SHELL_H
-#define SHELL_H
+#ifndef _SHELL_H_
+#define _SHELL_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -78,14 +78,14 @@ typedef struct pass
 	unsigned int linesCount;
 	int errors;
 	int lines_flag;
-	char file_Name;
-	list_t linkedenv;
-	list_t hist;
-	list_t neigb_node;
+	char *file_Name;
+	list_t *linkedenv;
+	list_t *hist;
+	list_t *neigb_node;
 	char **env;
 	int changed_env;
 	int last_command;
-	char cmd_buf_pointer;
+	char **cmd_buf_pointer;
 	int cmd_types;
 	int read_dict;
 	int hist_num_counts;
