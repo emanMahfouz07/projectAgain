@@ -31,7 +31,7 @@
 #define USE_GETLINE 0
 #define USE_STRTOK 0
 
-#define HIST_FILE	".simple_shell_history"
+#define HIST_FILE	".shell_history"
 #define HIST_MAX	4096
 
 extern char **env;
@@ -119,7 +119,7 @@ void fork_exec_command(infom_t *);
 /* parser.c */
 int is_cmd_Valid(infom_t *, char *);
 char *duplicate_chars(char *, int, int);
-char *find_executable_path(infom_t, char *, char *);
+char *find_executable_path(infom_t *, char *, char *);
 
 /* loophsh.c */
 int loophsh(char **);

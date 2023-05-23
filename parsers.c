@@ -65,7 +65,7 @@ char *find_executable_path(infom_t *infom, char *pathstring, char *command)
 	{
 		if (!pathstring[i] || pathstring[i] == ':')
 		{
-			paths = _dublicate_string(pathstring, current_pos, i);
+			paths = duplicate_chars(pathstring, current_pos, i);
 			if (!*paths)
 				_strcat(paths, command);
 			else
