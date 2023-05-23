@@ -64,8 +64,8 @@ void free_shell_info(infom_t *info, int all)
 			free_list_memory(&(info->hist));
 		if (info->neigb_node)
 			free_list_memory(&(info->neigb_node));
-		ffree(info->env);
-			info->env = NULL;
+		ffree(info->environ);
+			info->environ = NULL;
 		free_block((void **)info->cmd_buf_pointer);
 		if (info->read_dict > 2)
 			close(info->read_dict);

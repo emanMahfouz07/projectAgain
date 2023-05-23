@@ -8,13 +8,13 @@
  */
 char **get_env_variables(infom_t *info)
 {
-	if (!info->env || info->changed_env)
+	if (!info->environ || info->changed_env)
 	{
-		info->env = convert_list_to_strings(info->linkedenv);
+		info->environ = convert_list_to_strings(info->linkedenv);
 		info->changed_env = 0;
 	}
 
-	return (info->env);
+	return (info->environ);
 }
 
 /**
