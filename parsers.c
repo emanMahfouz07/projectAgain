@@ -9,13 +9,13 @@
  */
 int is_cmd_Valid(infom_t *infom, char *paths)
 {
-	struct state ste;
+	struct stat ste;
 
 	(void)infom;
-	if (!paths || state(paths, &ste))
+	if (!paths || stat(paths, &ste))
 		return (0);
 
-	if (ste.ste_mode & S_IFREG)
+	if (ste.st_mode & S_IFREG)
 	{
 		return (1);
 	}
@@ -49,10 +49,10 @@ char *duplicate_chars(char *pathstring, int starTT, int stopIn)
  *
  * Return: full path of cmd if found or NULL
  */
-char *find_executable_path(info_t *infom, char *pathstring, char *command)
+char *find_executable_path(infom_t *infom, char *pathstring, char *command)
 {
 	int i = 0, current_pos = 0;
-	char *pathe;
+	char *paths;
 
 	if (!pathstring)
 		return (NULL);
@@ -65,16 +65,16 @@ char *find_executable_path(info_t *infom, char *pathstring, char *command)
 	{
 		if (!pathstring[i] || pathstring[i] == ':')
 		{
-			pathe = dup_chars(pathstring, current_pos, i);
-			if (!*pathe)
-				_strcat(pathe, command);
+			paths = dup_chars(pathstring, current_pos, i);
+			if (!*paths)
+				_strcat(paths, command);
 			else
 			{
-				_strcat(pathe, "/");
-				_strcat(pathe, command);
+				_strcat(paths, "/");
+				_strcat(paths, command);
 			}
-			if (is_cmd_Valid(infom, pathe))
-				return (pathe);
+			if (is_cmd_Valid(infom, paths))
+				return (paths);
 			if (!pathstring[i])
 				break;
 			current_pos = i;

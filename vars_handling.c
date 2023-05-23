@@ -84,10 +84,10 @@ int replace_alias_with_command(infom_t *info)
 
 	for (i = 0; i < 10; i++)
 	{
-		nodes = starts_with(info->neigb_node, info->argvm[0], '=');
+		nodes = search_list_starts_with(info->neigb_node, info->argvm[0], '=');
 		if (!nodes)
 			return (0);
-		ffree(info->argvm[0]);
+		free(info->argvm[0]);
 		p = _find_strchr(nodes->str, '=');
 		if (!p)
 			return (0);
@@ -118,16 +118,16 @@ int replace_vars_in_input(infom_t *info)
 		if (!_strcmp(info->argvm[i], "$?"))
 		{
 			replace_string_vars(&(info->argvm[i]),
-				_dublicate_string(convert_number(info->last_command, 10, 0)));
+				_dublicate_string(convert_integer_to_string(info->last_command, 10, 0)));
 			continue;
 		}
 		if (!_strcmp(info->argvm[i], "$$"))
 		{
 			replace_string_vars(&(info->argvm[i]),
-				_dublicate_string(convert_number(getpid(), 10, 0)));
+				_dublicate_string(convert_integer_to_string(getpid(), 10, 0)));
 			continue;
 		}
-		nodes = starts_with(info->linkedenv, &info->argvm[i][1], '=');
+		nodes = search_list_starts_with(info->linkedenv, &info->argvm[i][1], '=');
 		if (nodes)
 		{
 			replace_string_vars(&(info->argvm[i]),
@@ -149,7 +149,7 @@ int replace_vars_in_input(infom_t *info)
  */
 int replace_string_vars(char **old, char *new)
 {
-	ffree(*old);
+	free(*old);
 	*old = new;
 	return (1);
 }

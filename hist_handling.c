@@ -20,7 +20,7 @@ char *get_hist_file_path(infom_t *info)
 	buf[0] = 0;
 	_strcpy(buf, dir);
 	_strcat(buf, "/");
-	_strcat(buf, INT_FILE);
+	_strcat(buf, HIST_FILE);
 	return (buf);
 }
 
@@ -40,15 +40,15 @@ int write_hist_to_file(infom_t *info)
 		return (-1);
 
 	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
-	ffree(filename);
+	free(filename);
 	if (fd == -1)
 		return (-1);
 	for (nodes = info->hist; nodes; nodes = nodes->next_index)
 	{
-		_puts(nodes->str, fd);
-		_puts('\n', fd);
+		_putsfdict(nodes->str, fd);
+		_putfdict('\n', fd);
 	}
-	_puts(BUF_FLUSH, fd);
+	_putfdict(BUF_FLUSH, fd);
 	close(fd);
 	return (1);
 }
@@ -70,7 +70,7 @@ int read_hist_from_file(infom_t *info)
 		return (0);
 
 	fd = open(filename, O_RDONLY);
-	ffree(filename);
+	free(filename);
 	if (fd == -1)
 		return (0);
 	if (!fstat(fd, &st))
@@ -83,7 +83,7 @@ int read_hist_from_file(infom_t *info)
 	rdlen = read(fd, buf, fsize);
 	buf[fsize] = 0;
 	if (rdlen <= 0)
-		return (ffree(buf), 0);
+		return (free(buf), 0);
 	close(fd);
 	for (i = 0; i < fsize; i++)
 		if (buf[i] == '\n')
@@ -94,12 +94,12 @@ int read_hist_from_file(infom_t *info)
 		}
 	if (last != i)
 		create_hist_list(info, buf + last, linecou++);
-	ffree(buf);
-	info->hist_num_count = linecou;
-	while (info->hist_num_count-- >= INT_MAX)
+	free(buf);
+	info->hist_num_counts = linecou;
+	while (info->hist_num_counts-- >= INT_MAX)
 		delete_nodes_at_index(&(info->hist), 0);
 	sort_and_renum_hist(info);
-	return (info->hist_num_count);
+	return (info->hist_num_counts);
 }
 
 /**
@@ -139,5 +139,5 @@ int sort_and_renum_hist(infom_t *info)
 		nodes->num = i++;
 		nodes = nodes->next_index;
 	}
-	return (info->hist_num_count = i);
+	return (info->hist_num_counts = i);
 }

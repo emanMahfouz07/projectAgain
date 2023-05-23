@@ -40,7 +40,7 @@ int change_directory(infom_t *info)
 	char *s, *di, buf[1024];
 	int chdir_re;
 
-	s = cwd(buf, 1024);
+	s = getcwd(buf, 1024);
 	if (!s)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
 	if (!info->argvm[1])
@@ -62,7 +62,7 @@ int change_directory(infom_t *info)
 		}
 		_puts(get_env_variable(info, "OLDPWD=")), _putchar('\n');
 		chdir_re = /* TODO: what should this be? */
-			chdir((di = get_env_variable(info, "OLDPWD=")) ? dir : "/");
+			chdir((di = get_env_variable(info, "OLDPWD=")) ? di : "/");
 	}
 	else
 		chdir_re = chdir(info->argvm[1]);
@@ -74,7 +74,7 @@ int change_directory(infom_t *info)
 	else
 	{
 		set_env(info, "OLDPWD", get_env_variable(info, "PWD="));
-		set_env(info, "PWD", cwd(buf, 1024));
+		set_env(info, "PWD", getcwd(buf, 1024));
 	}
 	return (0);
 }

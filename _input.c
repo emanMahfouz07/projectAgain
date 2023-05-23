@@ -15,7 +15,7 @@ ssize_t in_buf(infom_t *info, char **buf, size_t *len)
 
 	if (!*len) /* if nothing left in the buffer, fill it */
 	{
-		/*bfree((void **)info->cmd_buf);*/
+		/*free_block((void **)info->cmd_buf_pointer);*/
 		free(*buf);
 		*buf = NULL;
 		signal(SIGINT, handle_sigint);
@@ -113,21 +113,21 @@ ssize_t read_buf(infom_t *info, char *buf, size_t *i)
  * read_line - gets the next line of input from STDIN
  * @info: parameter struct
  * @ptr: address of pointer to buffer, preallocated or NULL
- * @len: size of preallocated ptr buffer if not NULL
+ * @length: size of preallocated ptr buffer if not NULL
  *
  * Return: s
  */
-int read_line(infom_t *info, char **ptr, size_t *len)
+int read_line(infom_t *info, char **ptr, size_t *length)
 {
 	static char buf[READ_BUF_SIZE];
-	static size_t i, length;
+	static size_t i, len;
 	size_t k;
 	ssize_t r = 0, s = 0;
 	char *p = NULL, *new_p = NULL, *c;
 
 	p = *ptr;
 	if (p && len)
-		s = *len;
+		s = *length;
 	if (i == len)
 		i = len = 0;
 
@@ -150,8 +150,8 @@ int read_line(infom_t *info, char **ptr, size_t *len)
 	i = k;
 	p = new_p;
 
-	if (len)
-		*len = s;
+	if (length)
+		*length = s;
 	*ptr = p;
 	return (s);
 }

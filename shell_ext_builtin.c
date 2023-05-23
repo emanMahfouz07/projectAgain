@@ -55,7 +55,7 @@ int sealias(infom_t *info, char *str)
 		return (unalias(info, str));
 
 	unalias(info, str);
-	return (add_node_end(&(info->neigb_node), str, 0) == NULL);
+	return (append_list_node(&(info->neigb_node), str, 0) == NULL);
 }
 
 /**

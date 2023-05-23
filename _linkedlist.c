@@ -24,7 +24,7 @@ list_t *add_list_node(list_t **head, const char *str, int num)
 		new_head->str = _dublicate_string(str);
 		if (!new_head->str)
 		{
-			ffree(new_head);
+			free(new_head);
 			return (NULL);
 		}
 	}
@@ -59,7 +59,7 @@ list_t *append_list_node(list_t **head, const char *str, int num)
 		new_node->str = _dublicate_string(str);
 		if (!new_node->str)
 		{
-			ffree(new_node);
+			free(new_node);
 			return (NULL);
 		}
 	}
@@ -113,8 +113,8 @@ int delete_list_node(list_t **head, unsigned int ind)
 	{
 		nodes = *head;
 		*head = (*head)->next_index;
-		ffree(nodes->str);
-		ffree(nodes);
+		free(nodes->str);
+		free(nodes);
 		return (1);
 	}
 	nodes = *head;
@@ -123,8 +123,8 @@ int delete_list_node(list_t **head, unsigned int ind)
 		if (i == ind)
 		{
 			prev_node->next_index = nodes->next_index;
-			ffree(nodes->str);
-			ffree(nodes);
+			free(nodes->str);
+			free(nodes);
 			return (1);
 		}
 		i++;
@@ -151,8 +151,8 @@ void free_list_memory(list_t **headpt)
 	while (nodes)
 	{
 		next_node = nodes->next_index;
-		ffree(nodes->str);
-		ffree(nodes);
+		free(nodes->str);
+		free(nodes);
 		nodes = next_node;
 	}
 	*headpt = NULL;

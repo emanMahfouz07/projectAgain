@@ -1,4 +1,4 @@
-#inlcude "shell.h"
+#include "shell.h"
 
 /**
  * hsh - main shell loop
@@ -40,7 +40,7 @@ int hsh(infom_t *infom, char **av)
 			exit(infom->last_command);
 		exit(infom->errors);
 	}
-	return(built_return);
+	return (built_return);
 }
 /**
  * find_builtFunc - finds a builtFunc command
@@ -55,35 +55,81 @@ int find_builtFunc(infom_t *infom)
 {
 	int i, built_in_return = -1;
 	built_funcs_table builtFuntbl[] = {
-		{"exit", _myexit},
-		{"env", _myenv},
-		{"help", _myhelp},
-		{"history", _myhistory},
-		{"setenv", _mysetenv},
-		{"unsetenv", _myunsetenv},
-		{"cd", _mycd},
-		{"alias", _myalias},
+		{"exit", quit_shell},
+		{"env", list_env_variables},
+		{"help", provide_help},
+		{"history", check_history},
+		{"setenv", set_env_variable},
+		{"unsetenv", unset_env_variable},
+		{"cd", change_directory},
+		{"alias", check_alias},
 		{NULL, NULL}
 	};
 
-	for (i = 0; builtFuntbl[i].type; i++)
-		if (_strcmp(infom->argv[0], builtFuntbl[i].type) == 0)
+	for (i = 0; builtFuntbl[i].typeF; i++)
+		if (_strcmp(infom->argvm[0], builtFuntbl[i].typeF) == 0)
 		{
 			infom->linesCount++;
-			built_in_return = builtFuntbl[i].func(infom);
+			built_in_return = builtFuntbl[i].funcs(infom);
 			break;
 		}
 	return (built_in_return);
 }
+
+
 /**
- * find_builtFunc - finds a command in PATH
+ * find_cmd - finds a command in PATH
  * @infom: the parameter & return info struct
  *
  * Return: void
  */
-void find_builtFunc(infom_t *infom)
+void find_cmd(infom_t *infom)
+{
+	char *paths = NULL;
+	int i, k;
+
+	infom->paths = infom->argvm[0];
+	if (infom->lines_flag == 1)
+	{
+		infom->linesCount++;
+		infom->lines_flag = 0;
+	}
+	for (i = 0, k = 0; infom->argm[i]; i++)
+		if (!check_if_delimiter(infom->argm[i], " \t\n"))
+			k++;
+	if (!k)
+		return;
+
+	paths = find_executable_path(infom, get_env_variable
+			(infom, "PATH="), infom->argvm[0]);
+	if (paths)
+	{
+		infom->paths = paths;
+		fork_exec_command(infom);
+	}
+	else
+	{
+		if ((interactive_shell(infom) || get_env_variable(infom, "PATH=")
+			|| infom->argvm[0][0] == '/') && is_cmd_Valid(infom, infom->argvm[0]))
+			fork_exec_command(infom);
+		else if (*(infom->argm) != '\n')
+		{
+			infom->last_command = 127;
+			print_error_message(infom, "not found\n");
+		}
+	}
+}
+
+/**
+ * fork_exec_command - finds a command in PATH
+ * @infom: the parameter & return info struct
+ *
+ * Return: void
+ */
+void fork_exec_command(infom_t *infom)
 {
 	pid_t chd_pid;
+
 	chd_pid = fork();
 	if (chd_pid == -1)
 	{
@@ -92,7 +138,7 @@ void find_builtFunc(infom_t *infom)
 	}
 	if (chd_pid == 0)
 	{
-		if (execve(infom->paths, infom->argvm, get_env_variables(info)) == -1)
+		if (execve(infom->paths, infom->argvm, get_env_variables(infom)) == -1)
 		{
 			free_shell_info(infom, 1);
 			if (errno == EACCES)

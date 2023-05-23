@@ -42,8 +42,8 @@ char **convert_list_to_strings(list_t *head)
 		if (!str)
 		{
 			for (j = 0; j < i; j++)
-				ffree(strs[j]);
-			ffree(strs);
+				free(strs[j]);
+			free(strs);
 			return (NULL);
 		}
 

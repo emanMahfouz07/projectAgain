@@ -31,6 +31,9 @@
 #define USE_GETLINE 0
 #define USE_STRTOK 0
 
+#define HIST_FILE	".simple_shell_history"
+#define HIST_MAX	4096
+
 extern char **env;
 
 /**
@@ -133,7 +136,7 @@ int _strcmp(char *, char *);
 char *starts_with(const char *, const char *);
 char *_strcat(char *, char *);
 
-/* string1.c */
+/* strings1.c */
 char *_strcpy(char *, char *);
 char *_dublicate_string(const char *);
 void _puts(char *);
