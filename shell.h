@@ -34,7 +34,7 @@
 #define HIST_FILE	".shell_history"
 #define HIST_MAX	4096
 
-extern char **env;
+extern char **environ;
 
 /**
  *struct liststring - single linked list
@@ -61,7 +61,7 @@ typedef struct liststring
  *@errors:the error code count
  *@file_Name: the program filename
  *@linkedenv: linked list local copy of environ
- *@env: custom modified copy of environ from LL env
+ *@environ: custom modified copy of environ from LL env
  *@hist: the history node
  *@neigb_node: the alias node
  *@changed_env: on if environ was changed
@@ -85,7 +85,7 @@ typedef struct pass
 	list_t *linkedenv;
 	list_t *hist;
 	list_t *neigb_node;
-	char **env;
+	char **environ;
 	int changed_env;
 	int last_command;
 	char **cmd_buf_pointer;

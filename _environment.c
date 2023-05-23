@@ -86,7 +86,7 @@ int add_env_variables(infom_t *info)
 	size_t i;
 
 	for (i = 0; env[i]; i++)
-		append_list_node(&nodes, env[i], 0);
+		append_list_node(&nodes, environ[i], 0);
 	info->linkedenv = nodes;
 	return (0);
 }
