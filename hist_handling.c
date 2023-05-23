@@ -97,7 +97,7 @@ int read_hist_from_file(infom_t *info)
 	free(buf);
 	info->hist_num_counts = linecou;
 	while (info->hist_num_counts-- >= INT_MAX)
-		delete_nodes_at_index(&(info->hist), 0);
+		delete_list_node(&(info->hist), 0);
 	sort_and_renum_hist(info);
 	return (info->hist_num_counts);
 }
@@ -116,7 +116,7 @@ int create_hist_list(infom_t *info, char *buf, int linecou)
 
 	if (info->hist)
 		nodes = info->hist;
-	add_nodes_end(&nodes, buf, linecou);
+	append_list_node(&nodes, buf, linecou);
 
 	if (!info->hist)
 		info->hist = nodes;
